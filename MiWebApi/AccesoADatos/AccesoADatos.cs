@@ -35,5 +35,14 @@ namespace MiWebApi.Data
                 return LeerDatos().ListadoCadetes;
             }
         }
+        public void Add(Pedido pedido)
+        {
+            lock (_lock)
+            {
+                var cadeteria = LeerDatos();
+                cadeteria.DarAltaPedido(pedido.Observacion, pedido.Cliente.Nombre, pedido.VerDireccionCliente(), pedido.Cliente.Telefono, pedido.Cliente.Referencia);
+                GuardarCadeteria(cadeteria);
+            }
+        }
     }
 }

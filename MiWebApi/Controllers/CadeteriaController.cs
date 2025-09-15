@@ -26,5 +26,11 @@ namespace MiWebApi.Controllers
         {
             var listadoCadetes = accesoADatos.GetCadetes(); return Ok(listadoCadetes);
         }
+        [HttpPost("Pedidos")]
+        public IActionResult AgregarPedido(Pedido pedido)
+        {
+            accesoADatos.Add(pedido);
+            return Created();
+        }
     }
 }

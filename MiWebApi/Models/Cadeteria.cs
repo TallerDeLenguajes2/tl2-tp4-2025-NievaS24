@@ -30,10 +30,10 @@ namespace MiWebApi.Models
         //     return total;
         // }
 
-        public Pedido DarAltaPedido(string observacion, string nombreCliente, string direccion, string telefono, string datosReferenciaDireccion)
+        public Pedido DarAltaPedido(string observacion, string nombreCliente, string direccion, string telefono, string Referencia)
         {
-            int numeroPedido = ListadoPedidos.Any() ? ListadoPedidos.Max(p => p.Numero) + 1 : 0;
-            Pedido nuevo = new(numeroPedido, observacion, new Cliente(nombreCliente, direccion, telefono, datosReferenciaDireccion), false);
+            int numero = ListadoPedidos.Any() ? ListadoPedidos.Max(p => p.Numero) + 1 : 1;
+            Pedido nuevo = new(numero, observacion, new Cliente(nombreCliente, direccion, telefono, Referencia), false);
             ListadoPedidos.Add(nuevo);
             return nuevo;
         }
@@ -43,7 +43,8 @@ namespace MiWebApi.Models
             Pedido? pedidoSeleccionado = ListadoPedidos.FirstOrDefault(p => p.Numero == idPedido);
             if (pedidoSeleccionado != null && cadeteACargo != null)
             {
-                pedidoSeleccionado.CadeteACargo = cadeteACargo;
+                pedidoSeleccionado.CambiarCadete(cadeteACargo);
+                // pedidoSeleccionado.CadeteACargo = cadeteACargo;
             }
             else
             {
