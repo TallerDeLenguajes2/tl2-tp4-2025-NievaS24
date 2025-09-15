@@ -32,5 +32,11 @@ namespace MiWebApi.Controllers
             accesoADatos.Add(pedido);
             return Created();
         }
+        [HttpPut("Pedidos/{idPedido}/{idCadete}")]
+        public IActionResult AsignarPedido(int idPedido, int idCadete)
+        {
+            Pedido pedido = accesoADatos.Change(idPedido, idCadete);
+            return Ok(pedido);
+        }
     }
 }

@@ -44,5 +44,15 @@ namespace MiWebApi.Data
                 GuardarCadeteria(cadeteria);
             }
         }
+        public Pedido Change(int idPedido, int idCadete)
+        {
+            lock (_lock)
+            {
+                var cadeteria = LeerDatos();
+                cadeteria.AsignarCadeteAPedido(idPedido, idCadete);
+                GuardarCadeteria(cadeteria);
+                return cadeteria.ListadoPedidos.FirstOrDefault(p => p.Numero == idPedido);
+            }
+        }
     }
 }

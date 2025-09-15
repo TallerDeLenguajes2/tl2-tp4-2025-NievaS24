@@ -6,9 +6,9 @@ namespace MiWebApi.Models
         public string Observacion { get; set; }
         public Cliente Cliente { get; set; }
         public bool Estado { get; private set; } = false;
-        public Cadete? CadeteACargo { get; private set; } = null;
+        public Cadete? CadeteACargo { get; set; } = null;
 
-        public Pedido(int numero, string observacion, Cliente cliente, bool estado)
+        public Pedido(int numero, string observacion, Cliente cliente)
         {
             Numero = numero;
             Observacion = observacion;
@@ -25,9 +25,9 @@ namespace MiWebApi.Models
             string datos = $"Nombre: {Cliente.Nombre} - Telefono: {Cliente.Telefono} - Direccion: {Cliente.Direccion} - Referencia Direccion: {Cliente.Referencia}";
             return datos;
         }
-        public void CambiarCadete(Cadete cadete)
+        public void CambiarCadete(Cadete nuevoCadete)
         {
-            CadeteACargo = cadete;
+            this.CadeteACargo = nuevoCadete;
         }
         public void CambiarEstado()
         {

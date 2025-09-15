@@ -33,11 +33,11 @@ namespace MiWebApi.Models
         public Pedido DarAltaPedido(string observacion, string nombreCliente, string direccion, string telefono, string Referencia)
         {
             int numero = ListadoPedidos.Any() ? ListadoPedidos.Max(p => p.Numero) + 1 : 1;
-            Pedido nuevo = new(numero, observacion, new Cliente(nombreCliente, direccion, telefono, Referencia), false);
+            Pedido nuevo = new(numero, observacion, new Cliente(nombreCliente, direccion, telefono, Referencia));
             ListadoPedidos.Add(nuevo);
             return nuevo;
         }
-        public void AsignarCadeteAPedido(int idCadete, int idPedido)
+        public void AsignarCadeteAPedido(int idPedido, int idCadete)
         {
             Cadete? cadeteACargo = ListadoCadetes.FirstOrDefault(c => c.Id == idCadete);
             Pedido? pedidoSeleccionado = ListadoPedidos.FirstOrDefault(p => p.Numero == idPedido);
