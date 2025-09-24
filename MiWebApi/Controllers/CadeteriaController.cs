@@ -26,13 +26,13 @@ namespace MiWebApi.Controllers
         {
             var listadoCadetes = accesoADatos.GetCadetes(); return Ok(listadoCadetes);
         }
-        [HttpPost("Pedidos")]
+        [HttpPost("Pedidos/Agregar")]
         public IActionResult AgregarPedido(Pedido pedido)
         {
             accesoADatos.Add(pedido);
             return Created();
         }
-        [HttpPut("Pedidos/{idPedido}/{idCadete}")]
+        [HttpPut("Pedidos/Asignar/{idPedido}/{idCadete}")]
         public IActionResult AsignarPedido(int idPedido, int idCadete)
         {
             try
@@ -47,7 +47,7 @@ namespace MiWebApi.Controllers
                 return NotFound(ex.Message);
             }
         }
-        [HttpPut("Pedidos/{idPedido}")]
+        [HttpPut("Pedidos/CambiarEstado/{idPedido}")]
         public IActionResult CambiarEstadoPedido(int idPedido)
         {
             try
@@ -57,6 +57,21 @@ namespace MiWebApi.Controllers
             }
             catch (KeyNotFoundException ex)
             {
+                return NotFound(ex.Message);
+            }
+        }
+        [HttpPut("Pedidos/Reasignar/{idPedido}/{idCadeteNuevo}")]
+        public IActionResult CambiarCadetePedido(int idPedido, int idCadeteNuevo)
+        {
+            try
+            {
+                Pedido? pedido = accesoADatos.Change(idPedido, idCadeteNuevo);
+                return Ok(pedido);
+
+            }
+            catch (KeyNotFoundException ex)
+            {
+
                 return NotFound(ex.Message);
             }
         }
