@@ -5,7 +5,7 @@ namespace MiWebApi.Models
         public int Numero { get; set; }
         public string Observacion { get; set; }
         public Cliente Cliente { get; set; }
-        public bool Estado { get; private set; } = false;
+        public bool Estado { get; set; } = false;
         public Cadete? CadeteACargo { get; set; } = null;
 
         public Pedido(int numero, string observacion, Cliente cliente)
@@ -31,7 +31,7 @@ namespace MiWebApi.Models
         }
         public void CambiarEstado()
         {
-            Estado = true;
+            Estado = !Estado;
         }
     }
 }

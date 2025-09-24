@@ -45,8 +45,8 @@ namespace MiWebApi.Models
         }
         public void CambiarEstado(int id)
         {
-            Pedido? pedidoEntregado = ListadoPedidos.FirstOrDefault(pedido => pedido.Numero == id);
-            pedidoEntregado?.CambiarEstado(); //si no es null cambia el estado
+            Pedido? pedidoEntregado = ListadoPedidos.FirstOrDefault(pedido => pedido.Numero == id) ?? throw new KeyNotFoundException($"El pedido {id} no existe.");
+            pedidoEntregado.CambiarEstado();
         }
     }
 }

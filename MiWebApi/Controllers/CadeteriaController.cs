@@ -47,5 +47,18 @@ namespace MiWebApi.Controllers
                 return NotFound(ex.Message);
             }
         }
+        [HttpPut("Pedidos/{idPedido}")]
+        public IActionResult CambiarEstadoPedido(int idPedido)
+        {
+            try
+            {
+                Pedido? pedido = accesoADatos.StateChange(idPedido);
+                return Ok(pedido);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
     }
 }

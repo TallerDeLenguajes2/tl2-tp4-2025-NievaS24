@@ -54,5 +54,16 @@ namespace MiWebApi.Data
                 return cadeteria.ListadoPedidos.FirstOrDefault(p => p.Numero == idPedido);
             }
         }
+
+        public Pedido? StateChange(int idPedido)
+        {
+            lock (_lock)
+            {
+                var cadeteria = LeerDatos();
+                cadeteria.CambiarEstado(idPedido);
+                GuardarCadeteria(cadeteria);
+                return cadeteria.ListadoPedidos.FirstOrDefault(p => p.Numero == idPedido);
+            }
+        }
     }
 }
