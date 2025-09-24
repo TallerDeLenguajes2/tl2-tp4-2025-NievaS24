@@ -35,8 +35,17 @@ namespace MiWebApi.Controllers
         [HttpPut("Pedidos/{idPedido}/{idCadete}")]
         public IActionResult AsignarPedido(int idPedido, int idCadete)
         {
-            Pedido pedido = accesoADatos.Change(idPedido, idCadete);
-            return Ok(pedido);
+            try
+            {
+                Pedido? pedido = accesoADatos.Change(idPedido, idCadete);
+                return Ok(pedido);
+
+            }
+            catch (KeyNotFoundException ex)
+            {
+
+                return NotFound(ex.Message);
+            }
         }
     }
 }

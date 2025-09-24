@@ -39,17 +39,9 @@ namespace MiWebApi.Models
         }
         public void AsignarCadeteAPedido(int idPedido, int idCadete)
         {
-            Cadete? cadeteACargo = ListadoCadetes.FirstOrDefault(c => c.Id == idCadete);
-            Pedido? pedidoSeleccionado = ListadoPedidos.FirstOrDefault(p => p.Numero == idPedido);
-            if (pedidoSeleccionado != null && cadeteACargo != null)
-            {
-                pedidoSeleccionado.CambiarCadete(cadeteACargo);
-                // pedidoSeleccionado.CadeteACargo = cadeteACargo;
-            }
-            else
-            {
-                Console.WriteLine("No se pudo asignar el cadete");
-            }
+            Cadete? cadeteACargo = ListadoCadetes.FirstOrDefault(c => c.Id == idCadete) ?? throw new KeyNotFoundException($"El cadete {idCadete} no existe.");
+            Pedido? pedidoSeleccionado = ListadoPedidos.FirstOrDefault(p => p.Numero == idPedido) ?? throw new KeyNotFoundException($"El pedido {idPedido} no existe.");
+            pedidoSeleccionado.CambiarCadete(cadeteACargo);
         }
         public void CambiarEstado(int id)
         {

@@ -44,7 +44,7 @@ namespace MiWebApi.Data
                 GuardarCadeteria(cadeteria);
             }
         }
-        public Pedido Change(int idPedido, int idCadete)
+        public Pedido? Change(int idPedido, int idCadete)
         {
             lock (_lock)
             {
