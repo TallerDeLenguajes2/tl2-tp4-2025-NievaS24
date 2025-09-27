@@ -1,0 +1,22 @@
+[
+    {
+        "Numero": 1,
+        "Observacion": "1 Milanesa napolitana con Papas",
+        "Cliente": {
+            "Nombre": "Santiago Lopez",
+            "Direccion": "General Paz 350",
+            "Telefono": "3814894546",
+            "Referencia": "A la par de un Mckio"
+        }
+    },
+    {
+        "Numero": 2,
+        "Observacion": "1 Pizza Fugazzetta",
+        "Cliente": {
+            "Nombre": "Maria Gimenez",
+            "Direccion": "Av. Aconquija 1340",
+            "Telefono": "3813754296",
+            "Referencia": ""
+        }
+    }
+]

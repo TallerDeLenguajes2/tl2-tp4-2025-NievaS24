@@ -1,0 +1,26 @@
+[
+    {
+        "Id": 1,
+        "Nombre": "Gabriel Vargas",
+        "Direccion": "Corrientes 64",
+        "Telefono": "3815968479"
+    },
+    {
+        "Id": 2,
+        "Nombre": "Ana Dominguez",
+        "Direccion": "Marcos Paz 980",
+        "Telefono": "3814912379"
+    },
+    {
+        "Id": 3,
+        "Nombre": "Rodrigo Velazquez",
+        "Direccion": "Las Heras 100",
+        "Telefono": "3814464446"
+    },
+    {
+        "Id": 4,
+        "Nombre": "Leonel Aguirre",
+        "Direccion": "Laprida 1500",
+        "Telefono": "3816910950"
+    }
+]
