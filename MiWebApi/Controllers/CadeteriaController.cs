@@ -40,7 +40,7 @@ namespace MiWebApi.Controllers
         {
             cadeteria.DarAltaPedido(pedido);
             ADatosPedidos.Guardar(cadeteria.ListadoPedidos);
-            return Created();
+            return Created($"/Cadeteria/Pedidos/{pedido.Numero}", pedido);
         }
 
         [HttpPut("Pedidos/Asignar/{idPedido}/{idCadete}")]
@@ -50,7 +50,7 @@ namespace MiWebApi.Controllers
             {
                 cadeteria.AsignarCadeteAPedido(idPedido, idCadete);
                 ADatosPedidos.Guardar(cadeteria.ListadoPedidos);
-                return Ok($"Se asigno el cadete {idCadete} al pedido {idPedido} correctamente.");
+                return Ok(cadeteria.ListadoPedidos.FirstOrDefault(p => p.Numero == idPedido));
 
             }
             catch (KeyNotFoundException ex)
@@ -67,7 +67,7 @@ namespace MiWebApi.Controllers
             {
                 cadeteria.CambiarEstado(idPedido);
                 ADatosPedidos.Guardar(cadeteria.ListadoPedidos);
-                return Ok("Se realizo el cambio de estado correctamente.");
+                return Ok(cadeteria.ListadoPedidos.FirstOrDefault(p => p.Numero == idPedido));
             }
             catch (KeyNotFoundException ex)
             {
@@ -82,7 +82,7 @@ namespace MiWebApi.Controllers
             {
                 cadeteria.AsignarCadeteAPedido(idPedido, idCadeteNuevo);
                 ADatosPedidos.Guardar(cadeteria.ListadoPedidos);
-                return Ok($"Se reasigno el pedido {idPedido} al cadete {idCadeteNuevo} correctamente.");
+                return Ok(cadeteria.ListadoPedidos.FirstOrDefault(p => p.Numero == idPedido));
 
             }
             catch (KeyNotFoundException ex)
