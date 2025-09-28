@@ -42,21 +42,23 @@ namespace MiWebApi.Controllers
             ADatosPedidos.Guardar(cadeteria.ListadoPedidos);
             return Created();
         }
-        // [HttpPut("Pedidos/Asignar/{idPedido}/{idCadete}")]
-        // public IActionResult AsignarPedido(int idPedido, int idCadete)
-        // {
-        //     try
-        //     {
-        //         Pedido? pedido = accesoADatos.Change(idPedido, idCadete);
-        //         return Ok(pedido);
 
-        //     }
-        //     catch (KeyNotFoundException ex)
-        //     {
+        [HttpPut("Pedidos/Asignar/{idPedido}/{idCadete}")]
+        public IActionResult AsignarPedido(int idPedido, int idCadete)
+        {
+            try
+            {
+                cadeteria.AsignarCadeteAPedido(idPedido, idCadete);
+                ADatosPedidos.Guardar(cadeteria.ListadoPedidos);
+                return Ok($"Se asigno el cadete {idCadete} al pedido {idPedido} correctamente.");
 
-        //         return NotFound(ex.Message);
-        //     }
-        // }
+            }
+            catch (KeyNotFoundException ex)
+            {
+
+                return NotFound(ex.Message);
+            }
+        }
 
         [HttpPut("Pedidos/CambiarEstado/{idPedido}")]
         public IActionResult CambiarEstadoPedido(int idPedido)
@@ -72,20 +74,22 @@ namespace MiWebApi.Controllers
                 return NotFound(ex.Message);
             }
         }
-        // [HttpPut("Pedidos/Reasignar/{idPedido}/{idCadeteNuevo}")]
-        // public IActionResult CambiarCadetePedido(int idPedido, int idCadeteNuevo)
-        // {
-        //     try
-        //     {
-        //         Pedido? pedido = accesoADatos.Change(idPedido, idCadeteNuevo);
-        //         return Ok(pedido);
 
-        //     }
-        //     catch (KeyNotFoundException ex)
-        //     {
+        [HttpPut("Pedidos/Reasignar/{idPedido}/{idCadeteNuevo}")]
+        public IActionResult CambiarCadetePedido(int idPedido, int idCadeteNuevo)
+        {
+            try
+            {
+                cadeteria.AsignarCadeteAPedido(idPedido, idCadeteNuevo);
+                ADatosPedidos.Guardar(cadeteria.ListadoPedidos);
+                return Ok($"Se reasigno el pedido {idPedido} al cadete {idCadeteNuevo} correctamente.");
 
-        //         return NotFound(ex.Message);
-        //     }
-        // }
+            }
+            catch (KeyNotFoundException ex)
+            {
+
+                return NotFound(ex.Message);
+            }
+        }
     }
 }
