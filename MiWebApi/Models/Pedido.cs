@@ -3,11 +3,15 @@ namespace MiWebApi.Models
     public class Pedido
     {
         public int Numero { get; set; }
-        public string Observacion { get; set; }
-        public Cliente Cliente { get; set; }
+        public string? Observacion { get; set; }
+        public Cliente? Cliente { get; set; }
         public bool Estado { get; set; } = false;
         public Cadete? CadeteACargo { get; set; } = null;
 
+        public Pedido()
+        {
+
+        }
         public Pedido(int numero, string observacion, Cliente cliente)
         {
             Numero = numero;
@@ -18,11 +22,11 @@ namespace MiWebApi.Models
         }
         public string VerDireccionCliente()
         {
-            return Cliente.Direccion;
+            return Cliente?.Direccion ?? "";
         }
         public string VerDatosCliente()
         {
-            string datos = $"Nombre: {Cliente.Nombre} - Telefono: {Cliente.Telefono} - Direccion: {Cliente.Direccion} - Referencia Direccion: {Cliente.Referencia}";
+            string datos = $"Nombre: {Cliente?.Nombre} - Telefono: {Cliente?.Telefono} - Direccion: {Cliente?.Direccion} - Referencia Direccion: {Cliente?.Referencia}";
             return datos;
         }
         public void CambiarCadete(Cadete nuevoCadete)

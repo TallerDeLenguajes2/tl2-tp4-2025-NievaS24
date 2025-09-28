@@ -2,11 +2,11 @@ using System.Text.Json;
 using MiWebApi.Models;
 namespace MiWebApi.Data
 {
-    public class AccesoADatos
+    public class AccesoADatosCadeteria
     {
         private const string FilePath = "data/cadeteria.json";
-        private static readonly object _lock = new();
-        private Cadeteria LeerDatos()
+
+        public Cadeteria Obtener()
         {
             if (!File.Exists(FilePath))
             {
@@ -15,55 +15,38 @@ namespace MiWebApi.Data
             var json = File.ReadAllText(FilePath);
             return JsonSerializer.Deserialize<Cadeteria>(json) ?? new Cadeteria();
         }
-        private void GuardarCadeteria(Cadeteria cadeteria)
+    }
+    public class AccesoADatosCadetes
+    {
+        private const string FilePath = "data/Cadetes.json";
+        public List<Cadete> Obtener()
         {
-            var options = new JsonSerializerOptions { WriteIndented = true };
-            var json = JsonSerializer.Serialize(cadeteria, options);
-            File.WriteAllText(FilePath, json);
-        }
-        public List<Pedido> GetPedidos()
-        {
-            lock (_lock)
+            if (!File.Exists(FilePath))
             {
-                return LeerDatos().ListadoPedidos;
+                return new List<Cadete>();
             }
+            var json = File.ReadAllText(FilePath);
+            return JsonSerializer.Deserialize<List<Cadete>>(json) ?? new List<Cadete>();
         }
-        public List<Cadete> GetCadetes()
+    }
+    public class AccesoADatosPedidos
+    {
+        private const string FilePath = "data/Pedidos.json";
+        public List<Pedido> Obtener()
         {
-            lock (_lock)
+            if (!File.Exists(FilePath))
             {
-                return LeerDatos().ListadoCadetes;
+                return new List<Pedido>();
             }
-        }
-        public void Add(Pedido pedido)
-        {
-            lock (_lock)
-            {
-                var cadeteria = LeerDatos();
-                cadeteria.DarAltaPedido(pedido.Observacion, pedido.Cliente.Nombre, pedido.VerDireccionCliente(), pedido.Cliente.Telefono, pedido.Cliente.Referencia);
-                GuardarCadeteria(cadeteria);
-            }
-        }
-        public Pedido? Change(int idPedido, int idCadete)
-        {
-            lock (_lock)
-            {
-                var cadeteria = LeerDatos();
-                cadeteria.AsignarCadeteAPedido(idPedido, idCadete);
-                GuardarCadeteria(cadeteria);
-                return cadeteria.ListadoPedidos.FirstOrDefault(p => p.Numero == idPedido);
-            }
+            var json = File.ReadAllText(FilePath);
+            return JsonSerializer.Deserialize<List<Pedido>>(json) ?? new List<Pedido>();
         }
 
-        public Pedido? StateChange(int idPedido)
+        public void Guardar(List<Pedido> pedidos)
         {
-            lock (_lock)
-            {
-                var cadeteria = LeerDatos();
-                cadeteria.CambiarEstado(idPedido);
-                GuardarCadeteria(cadeteria);
-                return cadeteria.ListadoPedidos.FirstOrDefault(p => p.Numero == idPedido);
-            }
+            var options = new JsonSerializerOptions { WriteIndented = true };
+            var json = JsonSerializer.Serialize(pedidos, options);
+            File.WriteAllText(FilePath, json);
         }
     }
 }

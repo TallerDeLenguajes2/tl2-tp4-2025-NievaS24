@@ -8,72 +8,82 @@ namespace MiWebApi.Controllers
     [Route("[controller]")]
     public class CadeteriaController : ControllerBase
     {
-        private AccesoADatos accesoADatos;
+        private Cadeteria cadeteria;
+        private AccesoADatosCadeteria ADatosCadeteria;
+        private AccesoADatosCadetes ADatosCadetes;
+        private AccesoADatosPedidos ADatosPedidos;
         public CadeteriaController()
         {
             //esto es el constructor de la clase
-            accesoADatos = new AccesoADatos();
+            ADatosCadeteria = new AccesoADatosCadeteria();
+            ADatosCadetes = new AccesoADatosCadetes();
+            ADatosPedidos = new AccesoADatosPedidos();
+
+            cadeteria = ADatosCadeteria.Obtener();
+            cadeteria.AgregarListaCadetes(ADatosCadetes.Obtener());
+            cadeteria.AgregarListaPedidos(ADatosPedidos.Obtener());
         }
 
         [HttpGet("Pedidos")]
         public IActionResult GetPedidos()
         {
-            var listadoPedidos = accesoADatos.GetPedidos();
-            return Ok(listadoPedidos);
+            return Ok(cadeteria.ListadoPedidos);
         }
         [HttpGet("Cadetes")]
         public IActionResult GetCadetes()
         {
-            var listadoCadetes = accesoADatos.GetCadetes(); return Ok(listadoCadetes);
+            return Ok(cadeteria.ListadoCadetes);
         }
         [HttpPost("Pedidos/Agregar")]
         public IActionResult AgregarPedido(Pedido pedido)
         {
-            accesoADatos.Add(pedido);
+            cadeteria.DarAltaPedido(pedido);
+            ADatosPedidos.Guardar(cadeteria.ListadoPedidos);
+            // return Created("Pedidos/Agregar", pedido);
             return Created();
         }
-        [HttpPut("Pedidos/Asignar/{idPedido}/{idCadete}")]
-        public IActionResult AsignarPedido(int idPedido, int idCadete)
-        {
-            try
-            {
-                Pedido? pedido = accesoADatos.Change(idPedido, idCadete);
-                return Ok(pedido);
+        // [HttpPut("Pedidos/Asignar/{idPedido}/{idCadete}")]
+        // public IActionResult AsignarPedido(int idPedido, int idCadete)
+        // {
+        //     try
+        //     {
+        //         Pedido? pedido = accesoADatos.Change(idPedido, idCadete);
+        //         return Ok(pedido);
 
-            }
-            catch (KeyNotFoundException ex)
-            {
+        //     }
+        //     catch (KeyNotFoundException ex)
+        //     {
 
-                return NotFound(ex.Message);
-            }
-        }
-        [HttpPut("Pedidos/CambiarEstado/{idPedido}")]
-        public IActionResult CambiarEstadoPedido(int idPedido)
-        {
-            try
-            {
-                Pedido? pedido = accesoADatos.StateChange(idPedido);
-                return Ok(pedido);
-            }
-            catch (KeyNotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
-        }
-        [HttpPut("Pedidos/Reasignar/{idPedido}/{idCadeteNuevo}")]
-        public IActionResult CambiarCadetePedido(int idPedido, int idCadeteNuevo)
-        {
-            try
-            {
-                Pedido? pedido = accesoADatos.Change(idPedido, idCadeteNuevo);
-                return Ok(pedido);
+        //         return NotFound(ex.Message);
+        //     }
+        // }
+        // [HttpPut("Pedidos/CambiarEstado/{idPedido}")]
+        // public IActionResult CambiarEstadoPedido(int idPedido)
+        // {
+        //     try
+        //     {
+        //         Pedido? pedido = ADatosPedidos.StateChange(idPedido);
+        //         return Ok(pedido);
+        //     }
+        //     catch (KeyNotFoundException ex)
+        //     {
+        //         return NotFound(ex.Message);
+        //     }
+        // }
+        // [HttpPut("Pedidos/Reasignar/{idPedido}/{idCadeteNuevo}")]
+        // public IActionResult CambiarCadetePedido(int idPedido, int idCadeteNuevo)
+        // {
+        //     try
+        //     {
+        //         Pedido? pedido = accesoADatos.Change(idPedido, idCadeteNuevo);
+        //         return Ok(pedido);
 
-            }
-            catch (KeyNotFoundException ex)
-            {
+        //     }
+        //     catch (KeyNotFoundException ex)
+        //     {
 
-                return NotFound(ex.Message);
-            }
-        }
+        //         return NotFound(ex.Message);
+        //     }
+        // }
     }
 }
