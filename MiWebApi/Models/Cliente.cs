@@ -7,12 +7,9 @@ namespace MiWebApi.Models
         public string Telefono { get; set; } = string.Empty;
         public string Referencia { get; set; } = string.Empty;
 
-        public Cliente(string nombre, string direccion, string telefono, string referencia)
+        public Cliente()
         {
-            Nombre = nombre;
-            Direccion = direccion;
-            Telefono = telefono;
-            Referencia = referencia;
+
         }
     }
 }

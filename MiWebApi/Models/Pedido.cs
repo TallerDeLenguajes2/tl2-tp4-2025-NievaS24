@@ -12,27 +12,12 @@ namespace MiWebApi.Models
         {
 
         }
-        public Pedido(int numero, string observacion, Cliente cliente)
-        {
-            Numero = numero;
-            Observacion = observacion;
-            Cliente = cliente;
-            Estado = false;
-            CadeteACargo = null;
-        }
-        public string VerDireccionCliente()
-        {
-            return Cliente?.Direccion ?? "";
-        }
-        public string VerDatosCliente()
-        {
-            string datos = $"Nombre: {Cliente?.Nombre} - Telefono: {Cliente?.Telefono} - Direccion: {Cliente?.Direccion} - Referencia Direccion: {Cliente?.Referencia}";
-            return datos;
-        }
+
         public void CambiarCadete(Cadete nuevoCadete)
         {
-            this.CadeteACargo = nuevoCadete;
+            CadeteACargo = nuevoCadete;
         }
+
         public void CambiarEstado()
         {
             Estado = !Estado;

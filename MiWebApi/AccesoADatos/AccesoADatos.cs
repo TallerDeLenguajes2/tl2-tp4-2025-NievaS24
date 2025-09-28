@@ -5,7 +5,6 @@ namespace MiWebApi.Data
     public class AccesoADatosCadeteria
     {
         private const string FilePath = "data/cadeteria.json";
-
         public Cadeteria Obtener()
         {
             if (!File.Exists(FilePath))

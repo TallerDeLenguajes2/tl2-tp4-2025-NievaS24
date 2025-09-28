@@ -14,7 +14,6 @@ namespace MiWebApi.Controllers
         private AccesoADatosPedidos ADatosPedidos;
         public CadeteriaController()
         {
-            //esto es el constructor de la clase
             ADatosCadeteria = new AccesoADatosCadeteria();
             ADatosCadetes = new AccesoADatosCadetes();
             ADatosPedidos = new AccesoADatosPedidos();
@@ -29,17 +28,18 @@ namespace MiWebApi.Controllers
         {
             return Ok(cadeteria.ListadoPedidos);
         }
+
         [HttpGet("Cadetes")]
         public IActionResult GetCadetes()
         {
             return Ok(cadeteria.ListadoCadetes);
         }
+
         [HttpPost("Pedidos/Agregar")]
         public IActionResult AgregarPedido(Pedido pedido)
         {
             cadeteria.DarAltaPedido(pedido);
             ADatosPedidos.Guardar(cadeteria.ListadoPedidos);
-            // return Created("Pedidos/Agregar", pedido);
             return Created();
         }
         // [HttpPut("Pedidos/Asignar/{idPedido}/{idCadete}")]
@@ -57,19 +57,21 @@ namespace MiWebApi.Controllers
         //         return NotFound(ex.Message);
         //     }
         // }
-        // [HttpPut("Pedidos/CambiarEstado/{idPedido}")]
-        // public IActionResult CambiarEstadoPedido(int idPedido)
-        // {
-        //     try
-        //     {
-        //         Pedido? pedido = ADatosPedidos.StateChange(idPedido);
-        //         return Ok(pedido);
-        //     }
-        //     catch (KeyNotFoundException ex)
-        //     {
-        //         return NotFound(ex.Message);
-        //     }
-        // }
+
+        [HttpPut("Pedidos/CambiarEstado/{idPedido}")]
+        public IActionResult CambiarEstadoPedido(int idPedido)
+        {
+            try
+            {
+                cadeteria.CambiarEstado(idPedido);
+                ADatosPedidos.Guardar(cadeteria.ListadoPedidos);
+                return Ok("Se realizo el cambio de estado correctamente.");
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
         // [HttpPut("Pedidos/Reasignar/{idPedido}/{idCadeteNuevo}")]
         // public IActionResult CambiarCadetePedido(int idPedido, int idCadeteNuevo)
         // {
